@@ -8,28 +8,50 @@ struct Mark {
   string x;
 };
 
-void printBoard(vector<vector<string>> board);
+void printBoard(vector<string> board);
 
 int main() {
-  // Mark型の2次元配列を作成
-  vector<vector<string>> board(3, vector<string>(3, " "));
-
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      cout << "Enter your mark" << endl;
-      cin >> board[i][j];
+  vector<string> board(9);
+  cout << "Enter your mark" << endl;
+  for (string &x : board) {
+    cin >> x;
+    // board.push_back(x); // board.push_back(x);
+  }
+  // for (int i = 0; i < 9; i++) {
+  //   cin >> board[i];
+  // }
+  // ここで入力してるはずなのに出力がされない！！
+  // for (int i = 0; i < 9; i++) {
+  //   cout << board[i] << " ";
+  // }
+  for (int i = 0; i < 9; i++) {
+    cout << board[i] << " " << " ";
+    if (i % 3 != 2) {
+      cout << "|";
+    } else {
+      cout << endl;
+      if (i != 8) {
+        cout << "---------" << endl;
+      }
     }
   }
-  printBoard(board);
+  // printBoard(board);
 }
 
-void printBoard(vector<vector<string>> board) {
-  for (int i = 0; i < 3; i++) {
-    for (int j = 0; j < 3; j++) {
-      cout << board[i][j] << " " << "|";
-    }
-    cout << endl;
-    if (i < 2)
+void printBoard(vector<string> board) {
+  for (int i = 0; i < 9; i++) {
+    cout << board[i] << " " << "|";
+    if ((i + 1) % 3 == 0) {
       cout << "---------" << endl;
+    }
   }
+
+  // for (int i = 0; i < 3; i++) {
+  //   for (int j = 0; j < 3; j++) {
+  //     cout << board[i][j] << " " << "|";
+  //   }
+  //   cout << endl;
+  //   if (i < 2)
+  //     cout << "---------" << endl;
+  // }
 }
