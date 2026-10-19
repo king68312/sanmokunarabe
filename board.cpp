@@ -1,9 +1,12 @@
 #include <iostream>
+#include <limits>
 #include <vector>
 
 using namespace std;
 
 void printBoard(vector<string> board);
+void playGame();
+void retry();
 
 const int LINES[8][3] = {
     {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // rows
@@ -26,45 +29,61 @@ string judge(vector<string> board) {
 }
 
 int main() {
-  vector<string> board(9, " ");
-  int turn = 0;
+  cout << "三目並べゲームを開始します。" << endl;
+  playGame();
+  return 0;
+}
 
+void playGame() {
+  vector<string> board(9, " ");
+  // oのターン、xのターンを交互に繰り返す
   // for (string &x : board) {
   //   cin >> x;
   // }
-
-  for (int i = 0; i < 9; i++) {
+  int pos;
+  string mark;
+  board[4] = "o"; // 初期状態で中央にoを置く
+  for (int i = 0; i < 8; i++) {
     printBoard(board);
-    int pos;
     cout << "マス番号を入力してください(0~8): ";
-    cin >> pos;
-    string mark;
-    cout << "マークを入力してください(x or o): ";
-    cin >> mark;
-    board[pos] = mark;
+    if (cin >> pos && pos >= 0 && pos < 9 && board[pos] == " ") {
+      // 入力が有効な場合のみ処理を続行
+      if (i % 2 == 0) {
+        board[pos] = "x";
+      } else {
+        board[pos] = "o";
+      }
+    } else {
+      cout << "無効な入力です。もう一度入力してください。" << endl;
+      i--; // ターンをやり直す
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      continue;
+    }
+    // x先行でそのあとはoと交互に入力する
     if (judge(board) != "") {
+      printBoard(board);
       cout << "勝者は: " << judge(board) << endl;
-      break;
+      retry();
     }
   }
   printBoard(board);
   cout << "引き分け" << endl;
-
-  // for (int i = 0; i < 9; i++) {
-  //   cin >> board[i];
-  // }
-  // ここで入力してるはずなのに出力がされない！！
-  // for (int i = 0; i < 9; i++) {
-  //   cout << board[i] << " ";
-  // }
-
-  // if (judge(board)) {
-  //   cout << "勝者あり" << endl;
-  // } else {
-  //   cout << "勝者なし" << endl;
-  // }
-  printBoard(board);
+  retry();
 }
+
+void retry() {
+  char choice;
+  cout << "もう一度プレイしますか？(y/n): ";
+  cin >> choice;
+  if (choice == 'y' || choice == 'Y') {
+    playGame(); // main関数を再度呼び出す
+  } else {
+    cout << "ゲームを終了します。" << endl;
+    exit(0);
+  }
+}
+
 void printBoard(vector<string> board) {
 
   for (int i = 0; i < 9; i++) {
@@ -78,12 +97,4 @@ void printBoard(vector<string> board) {
       }
     }
   }
-  // for (int i = 0; i < 3; i++) {
-  //   for (int j = 0; j < 3; j++) {
-  //     cout << board[i][j] << " " << "|";
-  //   }
-  //   cout << endl;
-  //   if (i < 2)
-  //     cout << "---------" << endl;
-  // }
 }
