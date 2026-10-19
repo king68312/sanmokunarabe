@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -15,7 +16,6 @@ const int LINES[8][3] = {
 };
 
 string judge(vector<string> board) {
-  // 縦横斜めに一致するものがあればTrue,それ以外はFalseを返す
   for (int i = 0; i < 8; i++) {
     if ((board[LINES[i][0]] == "x" ||
          board[LINES[i][0]] ==
@@ -41,7 +41,6 @@ void playGame() {
   //   cin >> x;
   // }
   int pos;
-  string mark;
   board[4] = "o"; // 初期状態で中央にoを置く
   for (int i = 0; i < 8; i++) {
     printBoard(board);
@@ -77,7 +76,7 @@ void retry() {
   cout << "もう一度プレイしますか？(y/n): ";
   cin >> choice;
   if (choice == 'y' || choice == 'Y') {
-    playGame(); // main関数を再度呼び出す
+    playGame();
   } else {
     cout << "ゲームを終了します。" << endl;
     exit(0);
