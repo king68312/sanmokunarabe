@@ -14,8 +14,11 @@ const int LINES[8][3] = {
 bool judge(vector<string> board) {
   // 縦横斜めに一致するものがあればTrue,それ以外はFalseを返す
   for (int i = 0; i < 8; i++) {
-    if (board[LINES[i][0]] == board[LINES[i][1]] &&
-        board[LINES[i][1]] == board[LINES[i][2]] && board[LINES[i][0]] != " ") {
+    if ((board[LINES[i][0]] == "x" ||
+         board[LINES[i][0]] ==
+             "o") && // 先頭の要素が"x"か"o"であることを確認、その後に全ての要素が一致するかを確認
+        board[LINES[i][0]] == board[LINES[i][1]] &&
+        board[LINES[i][1]] == board[LINES[i][2]]) {
       return true;
     }
   }
