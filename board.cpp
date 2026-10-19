@@ -5,13 +5,29 @@ using namespace std;
 
 void printBoard(vector<string> board);
 
+const int LINES[8][3] = {
+    {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // rows
+    {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // columns
+    {0, 4, 8}, {2, 4, 6}             // diagonals
+};
+
+bool judge(vector<string> board) {
+  // 縦横斜めに一致するものがあればTrue,それ以外はFalseを返す
+  for (int i = 0; i < 8; i++) {
+    if (board[LINES[i][0]] == board[LINES[i][1]] &&
+        board[LINES[i][1]] == board[LINES[i][2]] && board[LINES[i][0]] != " ") {
+      return true;
+    }
+  }
+  return false;
+}
+
 int main() {
   vector<string> board(9);
-  cout << "Enter your mark" << endl;
 
-  // for (string &x : board) {
-  //   cin >> x;
-  // }
+  for (string &x : board) {
+    cin >> x;
+  }
 
   // for (int i = 0; i < 9; i++) {
   //   cin >> board[i];
@@ -20,62 +36,13 @@ int main() {
   // for (int i = 0; i < 9; i++) {
   //   cout << board[i] << " ";
   // }
-  while (true) {
-    // マークがそろったことを確認する
-    // 横一列
-    if (board[0] == "x" && board[1] == "x" && board[2] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[3] == "x" && board[4] == "x" && board[5] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[6] == "x" && board[7] == "x" && board[8] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[0] == "o" && board[1] == "o" && board[2] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
-    } else if (board[3] == "o" && board[4] == "o" && board[5] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
-    } else if (board[6] == "o" && board[7] == "o" && board[8] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
-      // 縦一列
-    } else if (board[0] == "x" && board[3] == "x" && board[6] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[1] == "x" && board[4] == "x" && board[7] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[2] == "x" && board[5] == "x" && board[8] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[0] == "o" && board[3] == "o" && board[6] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
-    } else if (board[1] == "o" && board[4] == "o" && board[7] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
-    } else if (board[2] == "o" && board[5] == "o" && board[8] == "o") {
-      cout << "Player O wins!" << endl;
-      break;
 
-      // 斜め一列
-    } else if (board[0] == "x" && board[4] == "x" && board[8] == "x") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[2] == "x" && board[4] == "x" && board[6] == "x") {
-      break;
-    } else if (board[0] == "o" && board[4] == "o" && board[8] == "o") {
-      cout << "Player X wins!" << endl;
-      break;
-    } else if (board[2] == "o" && board[4] == "o" && board[6] == "o") {
-      break;
-    }
-
-    printBoard(board);
+  if (judge(board)) {
+    cout << "勝者あり" << endl;
+  } else {
+    cout << "勝者なし" << endl;
   }
+  printBoard(board);
 }
 void printBoard(vector<string> board) {
 
