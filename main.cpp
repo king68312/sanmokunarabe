@@ -4,6 +4,8 @@
 
 int main() {
   std::cout << "三目並べゲームを開始します。" << std::endl;
-  playGame();
+  do {
+    playGame();
+  } while (retry());
   return 0;
 }

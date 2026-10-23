@@ -1,6 +1,5 @@
 #include "board.h"
 
-#include <cstdlib>
 #include <iostream>
 #include <limits>
 
@@ -49,23 +48,22 @@ void playGame() {
     if (judge(board) != "") {
       printBoard(board);
       std::cout << "勝者は: " << judge(board) << std::endl;
-      retry();
+      return;
     }
   }
   printBoard(board);
   std::cout << "引き分け" << std::endl;
-  retry();
 }
 
-void retry() {
+bool retry() {
   char choice;
   std::cout << "もう一度プレイしますか？(y/n): ";
   std::cin >> choice;
   if (choice == 'y' || choice == 'Y') {
-    playGame();
+    return true;
   } else {
     std::cout << "ゲームを終了します。" << std::endl;
-    std::exit(0);
+    return false;
   }
 }
 

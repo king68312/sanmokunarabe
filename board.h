@@ -4,5 +4,5 @@
 
 void printBoard(std::vector<std::string> board);
 void playGame();
-void retry();
+bool retry();
 std::string judge(std::vector<std::string> board);
