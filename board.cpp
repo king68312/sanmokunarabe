@@ -3,6 +3,8 @@
 #include <iostream>
 #include <limits>
 
+#include "key.h"
+
 const int LINES[8][3] = {
     {0, 1, 2}, {3, 4, 5}, {6, 7, 8},  // rows
     {0, 3, 6}, {1, 4, 7}, {2, 5, 8},  // columns
@@ -28,22 +30,38 @@ void playGame() {
   int pos;
   board[4] = "o";  // 初期状態で中央にoを置く
   for (int i = 0; i < 8; i++) {
+    std::cout << "矢印キーで移動(q で終了)" << std::endl;
     printBoard(board);
-    std::cout << "マス番号を入力してください(0~8): ";
-    if (std::cin >> pos && pos >= 0 && pos < 9 && board[pos] == " ") {
-      // 入力が有効な場合のみ処理を続行
-      if (i % 2 == 0) {
-        board[pos] = "x";
-      } else {
-        board[pos] = "o";
-      }
-    } else {
-      std::cout << "無効な入力です。もう一度入力してください。" << std::endl;
-      i--;  // ターンをやり直す
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      continue;
+    pos = selectCell(board);
+    if (pos == -1) {
+      std::cout << "ゲームを終了します。" << std::endl;
+      return;
     }
+    // ---- 前のコード (数字で入力していたとき) ----
+    // std::cout << "マス番号を入力してください(0~8): ";
+    // if (std::cin >> pos && pos >= 0 && pos < 9 && board[pos] == " ") {
+    //   // 入力が有効な場合のみ処理を続行
+    //   if (i % 2 == 0) {
+    //     board[pos] = "x";
+    //   } else {
+    //     board[pos] = "o";
+    //   }
+    // } else {
+    //   std::cout << "無効な入力です。もう一度入力してください。" << std::endl;
+    //   i--;  // ターンをやり直す
+    //   std::cin.clear();
+    //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    //   continue;
+    // }
+    // ---- ここまで ----
+
+    // selectCell は空いているマスしか返さないので、そのまま置く (追加)
+    if (i % 2 == 0) {
+      board[pos] = "x";
+    } else {
+      board[pos] = "o";
+    }
+
     // x先行でそのあとはoと交互に入力する
     if (judge(board) != "") {
       printBoard(board);

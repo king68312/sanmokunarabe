@@ -6,10 +6,10 @@ LDLIBS =  -lgtest -lgtest_main -pthread
 
 all: game board_test
 
-game: board.cpp main.cpp board.h
+game: board.cpp key.cpp main.cpp board.h key.h
 	$(CXX) $(CXXFLAGS) $(filter %.cpp,$^) -o $@
 
-board_test: board.cpp board_test.cpp board.h
+board_test: board.cpp key.cpp board_test.cpp board.h key.h
 	$(CXX) $(CXXFLAGS) $(filter %.cpp,$^) $(LDLIBS) -o $@
 
 test: board_test

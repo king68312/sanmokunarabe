@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "board.h"
+#include "key.h"
 
 // それぞれのキーをUp Down Left Rightに対応させる
 //\033[2A
@@ -20,7 +21,8 @@
 //   std::string left = "\033[2D";
 // };
 
-enum class Key { kUp, kDown, kLeft, kRight, kQuit, kOther };
+// 前: enum class Key { kUp, kDown, kLeft, kRight, kQuit };
+enum class Key { kUp, kDown, kLeft, kRight, kEnter, kQuit, kOther };
 
 struct Position {
   int row;
@@ -29,9 +31,9 @@ struct Position {
 
 void enableRawMode() {
   termios term;
-  tcgetattr(STDIN_FILENO, &term);
+  tcgetattr(STDIN_FILENO, &term);    // 現在の端末設定を取得
   term.c_lflag &= ~(ICANON | ECHO);  // ICANONを無効にして、入力を即座に取得する
-  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+  tcsetattr(STDIN_FILENO, TCSANOW, &term);  // 端末設定を即座に反映
 }
 
 void disableRawMode() {
@@ -55,8 +57,9 @@ Key readKey() {
     if (letter == 'C') return Key::kRight;
     if (letter == 'D') return Key::kLeft;
   }
+  if (c == '\n' || c == ' ') return Key::kEnter;  // Enter かスペース (追加)
   if (c == 'q') return Key::kQuit;
-  return Key::kOther;  // デフォルトで終了キーを返す
+  return Key::kOther;  // どれでもないキー (追加)
 }
 
 Position movePosition(Position pos, Key key) {
@@ -67,11 +70,16 @@ Position movePosition(Position pos, Key key) {
   return pos;
 }
 
-void saveOrigin() {
+// 行と列 (Position) を、board の番号 (0〜8) に変える (追加)
+int toIndex(Position pos) { return pos.row * 3 + pos.col; }
+
+void saveOrigin() {  // 端末のカーソル位置を保存する
   std::cout << "\0337" << std::flush;
 }  // std::flashはバッファをフラッシュするためのもので、出力を即座に表示するために使用されます。
 
+// 端末のカーソル位置を元に戻す
 void backToOrigin() { std::cout << "\0338" << std::flush; }
+//\0338 ESC 8 端末のカーソル位置を保存した位置に戻す
 
 void showCursor(Position pos) {
   backToOrigin();
@@ -80,26 +88,53 @@ void showCursor(Position pos) {
             << std::flush;
 }
 
-int main() {
-  std::vector<std::string> board(9, " ");
-  std::cout << "矢印キーで移動(q で終了)" << std::endl;
-  printBoard(board);
-  saveOrigin();
-  enableRawMode();  // 端末を生のモードに設定
+// 矢印キーでマスを選んで、そのマスの番号 (0〜8) を返す (追加)
+// printBoard で盤面を表示した直後に呼ぶ。q で中断したら -1 を返す
+int selectCell(const std::vector<std::string>& board) {
+  saveOrigin();  // 盤面のすぐ下を覚える
+  enableRawMode();
 
-  Position cursor{0, 0};
-
+  Position cursor{1, 1};
   showCursor(cursor);
   while (true) {
     Key key = readKey();
-    if (key == Key::kQuit) break;
+
+    if (key == Key::kQuit) {  // q: 中断して -1 を返す
+      backToOrigin();
+      disableRawMode();
+      return -1;
+    }
+
+    if (key == Key::kEnter) {  // Enter: 空いているマスなら、その番号を返す
+      int cell = toIndex(cursor);
+      if (board[cell] == " ") {
+        backToOrigin();
+        disableRawMode();
+        return cell;
+      }
+    }
 
     cursor = movePosition(cursor, key);
     showCursor(cursor);
   }
-
-  backToOrigin();
-  disableRawMode();
-  std::cout << "終了します。" << std::endl;
-  return 0;
 }
+
+// ---- 前の main (key.cpp だけで動かしていたとき)。main は main.cpp にあるので使わない ----
+// int main() {
+//   std::vector<std::string> board(9, " ");
+//   std::cout << "矢印キーで移動(q で終了)" << std::endl;
+//   printBoard(board);
+//   enableRawMode();  // 端末を生のモードに設定
+//
+//   Position cursor{1, 1};
+//   showCursor(cursor);
+//   while (true) {
+//     Key key = readKey();
+//     if (key == Key::kQuit) break;
+//     cursor = movePosition(cursor, key);
+//     showCursor(cursor);
+//   }
+//   disableRawMode();
+//   return 0;
+// }
+// ---- ここまで ----
