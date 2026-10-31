@@ -37,25 +37,6 @@ void playGame() {
       std::cout << "ゲームを終了します。" << std::endl;
       return;
     }
-    // ---- 前のコード (数字で入力していたとき) ----
-    // std::cout << "マス番号を入力してください(0~8): ";
-    // if (std::cin >> pos && pos >= 0 && pos < 9 && board[pos] == " ") {
-    //   // 入力が有効な場合のみ処理を続行
-    //   if (i % 2 == 0) {
-    //     board[pos] = "x";
-    //   } else {
-    //     board[pos] = "o";
-    //   }
-    // } else {
-    //   std::cout << "無効な入力です。もう一度入力してください。" << std::endl;
-    //   i--;  // ターンをやり直す
-    //   std::cin.clear();
-    //   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    //   continue;
-    // }
-    // ---- ここまで ----
-
-    // selectCell は空いているマスしか返さないので、そのまま置く (追加)
     if (i % 2 == 0) {
       board[pos] = "x";
     } else {
@@ -77,6 +58,8 @@ bool retry() {
   char choice;
   std::cout << "もう一度プレイしますか？(y/n): ";
   std::cin >> choice;
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
+                  '\n');  // 入力バッファをクリア
   if (choice == 'y' || choice == 'Y') {
     return true;
   } else {
