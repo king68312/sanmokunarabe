@@ -1,3 +1,4 @@
 a.out
 build/
 *.o
+rust/target/
