@@ -1,6 +1,8 @@
 # sanmokunarabe
 
-ターミナルで遊ぶ三目並べ (○×ゲーム) を、複数の言語と設計で実装する学習プロジェクト。
+English | [日本語](README.ja.md)
+
+A terminal tic-tac-toe game, implemented in several languages and architectures as a learning project.
 
 ```
 矢印キーで移動(q で終了)
@@ -11,37 +13,38 @@ x  |   |
    |   |
 ```
 
-同じルールのゲームを言語ごとに書き、設計の考え方の違いを見比べることを目的にしている。
+The goal is to write the same game in different languages and compare how each one shapes the design.
 
-## 各言語の状況
+## Status
 
-| 言語 | 設計 | 状況 | 場所 |
+| Language | Architecture | Status | Location |
 |---|---|---|---|
-| C++ | MVC | 遊べる | [cpp/](cpp/) |
-| Rust | — | 予定 | — |
-| Elm | The Elm Architecture | 予定 | — |
-| Haskell | — | 予定 | — |
+| C++ | MVC | Playable | [cpp/](cpp/) |
+| Rust | — | Planned | — |
+| Elm | The Elm Architecture | Planned | — |
+| Haskell | — | Planned | — |
 
-## ルール
+## Rules
 
-- 最初に中央に o が置かれた状態から始まり、x から交互に置く。
-- 縦・横・斜めのどれかに 3 つ揃えたら勝ち。盤面が埋まったら引き分け。
-- 矢印キーでマスを選び、Enter / スペースで置く。q でやめる。
+- The game starts with an `o` already placed in the center; `x` moves first and players alternate.
+- Three in a row (horizontal, vertical, or diagonal) wins. A full board with no line is a draw.
+- Move the cursor with the arrow keys, place a mark with Enter or Space, and quit with `q`.
 
-ルールの細かい仕様とテストの方針は [docs/test-spec.md](docs/test-spec.md) にまとめていて、どの言語の実装もこれに従う。
+The detailed rules and the testing policy are in [docs/test-spec.md](docs/test-spec.md) (Japanese). Every implementation follows that spec.
 
-## 設計で大事にしていること
+## Design principles
 
-- **ルール (Model) は画面もキーボードも使わない。** 入出力は外側 (View / Controller) に閉じ込める。
-- そのため、ルールの部分だけをビルドしてテストできる。
-- 別の言語に移すときも、ルールの部分はそのまま書き写し、入出力の部分だけをその言語のやり方で書き直せばよい。
+- **The rules (Model) never touch the screen or the keyboard.** All input and output live in the outer layers (View / Controller).
+- Because of that, the rules can be built and tested on their own.
+- When porting to another language, the rules can be translated almost as-is; only the input/output layer is rewritten in that language's style.
 
-## ディレクトリ構成
+## Directory layout
 
 ```
 sanmokunarabe/
-├── README.md        このファイル
+├── README.md        this file (English)
+├── README.ja.md     Japanese version
 ├── docs/
-│   └── test-spec.md ルールとテストの仕様 (全言語で共有)
-└── cpp/             C++ 版 (ビルド方法は cpp/README.md)
+│   └── test-spec.md rules and test spec, shared by all languages
+└── cpp/             C++ version (build instructions in cpp/README.md)
 ```
