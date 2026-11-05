@@ -19,10 +19,20 @@ The goal is to write the same game in different languages and compare how each o
 
 | Language | Architecture | Status | Location |
 |---|---|---|---|
-| C++ | MVC | Playable | [cpp/](cpp/) |
-| Rust | — | Planned | — |
-| Elm | The Elm Architecture | Planned | — |
-| Haskell | — | Planned | — |
+| C++ | MVC | Playable (tests: WIP) | [cpp/](cpp/) |
+| Rust | — | TODO | — |
+| Elm | The Elm Architecture | TODO | — |
+| Haskell | — | TODO | — |
+
+## TODO
+
+This project is a work in progress.
+
+- [x] C++: playable game with an MVC structure
+- [ ] C++: tests for the Model (`judge`, cursor movement, turn order) — in progress
+- [ ] Rust port
+- [ ] Elm port
+- [ ] Haskell port
 
 ## Rules
 

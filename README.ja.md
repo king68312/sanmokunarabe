@@ -19,10 +19,20 @@ x  |   |
 
 | 言語 | 設計 | 状況 | 場所 |
 |---|---|---|---|
-| C++ | MVC | 遊べる | [cpp/](cpp/) |
-| Rust | — | 予定 | — |
-| Elm | The Elm Architecture | 予定 | — |
-| Haskell | — | 予定 | — |
+| C++ | MVC | 遊べる (テストは作成中) | [cpp/](cpp/) |
+| Rust | — | TODO | — |
+| Elm | The Elm Architecture | TODO | — |
+| Haskell | — | TODO | — |
+
+## TODO
+
+まだ作っている途中のプロジェクト。
+
+- [x] C++: MVC の構成で遊べる
+- [ ] C++: Model のテスト (`judge`、カーソル移動、手番の交代) — 作成中
+- [ ] Rust 版
+- [ ] Elm 版
+- [ ] Haskell 版
 
 ## ルール
 
