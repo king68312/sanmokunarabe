@@ -48,7 +48,7 @@ g++ -std=c++17 -Wall -Wextra board_test.cpp model.cpp -lgtest -lgtest_main -pthr
 ./board_test
 ```
 
-GoogleTest で `judge` (勝敗の判定) をテストする。テストの方針は [docs/test-spec.md](docs/test-spec.md) にまとめている。
+GoogleTest で `judge` (勝敗の判定) をテストする。テストの方針は [docs/test-spec.md](../docs/test-spec.md) にまとめている。
 
 ## 構成 (MVC)
 
@@ -69,4 +69,4 @@ model は画面もキーボードも使わない (テストできるように)
 | `controller.h` / `controller.cpp` | Controller: 入力とゲームの進行 | `enableRawMode`, `disableRawMode`, `readKey`, `movePosition`, `selectCell`, `playGame`, `retry` |
 | `main.cpp` | 入口 | ゲームを繰り返す。`q` でやめたらそのまま終了 |
 | `board_test.cpp` | テスト | `judge` のテスト |
-| `docs/test-spec.md` | 仕様 | テスト仕様書 |
+| `../docs/test-spec.md` | 仕様 | テスト仕様書 (全言語で共有) |
