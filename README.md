@@ -1,8 +1,8 @@
 # sanmokunarabe
 
-English | [日本語](README.ja.md)
+[English](README.en.md) | 日本語
 
-A terminal tic-tac-toe game, implemented in several languages and architectures as a learning project.
+ターミナルで遊ぶ三目並べ (○×ゲーム) を、複数の言語と設計で実装する学習プロジェクト。
 
 ```
 矢印キーで移動(q で終了)
@@ -13,48 +13,48 @@ x  |   |
    |   |
 ```
 
-The goal is to write the same game in different languages and compare how each one shapes the design.
+同じルールのゲームを言語ごとに書き、設計の考え方の違いを見比べることを目的にしている。
 
-## Status
+## 各言語の状況
 
-| Language | Architecture | Status | Location |
+| 言語 | 設計 | 状況 | 場所 |
 |---|---|---|---|
-| C++ | MVC | Playable (tests: WIP) | [cpp/](cpp/) |
+| C++ | MVC | 遊べる (テストは作成中) | [cpp/](cpp/) |
 | Rust | — | TODO | — |
 | Elm | The Elm Architecture | TODO | — |
 | Haskell | — | TODO | — |
 
 ## TODO
 
-This project is a work in progress.
+まだ作っている途中のプロジェクト。
 
-- [x] C++: playable game with an MVC structure
-- [ ] C++: tests for the Model (`judge`, cursor movement, turn order) — in progress
-- [ ] Rust port
-- [ ] Elm port
-- [ ] Haskell port
+- [x] C++: MVC の構成で遊べる
+- [ ] C++: Model のテスト (`judge`、カーソル移動、手番の交代) — 作成中
+- [ ] Rust 版
+- [ ] Elm 版
+- [ ] Haskell 版
 
-## Rules
+## ルール
 
-- The game starts with an `o` already placed in the center; `x` moves first and players alternate.
-- Three in a row (horizontal, vertical, or diagonal) wins. A full board with no line is a draw.
-- Move the cursor with the arrow keys, place a mark with Enter or Space, and quit with `q`.
+- 最初に中央に o が置かれた状態から始まり、x から交互に置く。
+- 縦・横・斜めのどれかに 3 つ揃えたら勝ち。盤面が埋まったら引き分け。
+- 矢印キーでマスを選び、Enter / スペースで置く。q でやめる。
 
-The detailed rules and the testing policy are in [docs/test-spec.md](docs/test-spec.md) (Japanese). Every implementation follows that spec.
+ルールの細かい仕様とテストの方針は [docs/test-spec.md](docs/test-spec.md) にまとめていて、どの言語の実装もこれに従う。
 
-## Design principles
+## 設計で大事にしていること
 
-- **The rules (Model) never touch the screen or the keyboard.** All input and output live in the outer layers (View / Controller).
-- Because of that, the rules can be built and tested on their own.
-- When porting to another language, the rules can be translated almost as-is; only the input/output layer is rewritten in that language's style.
+- **ルール (Model) は画面もキーボードも使わない。** 入出力は外側 (View / Controller) に閉じ込める。
+- そのため、ルールの部分だけをビルドしてテストできる。
+- 別の言語に移すときも、ルールの部分はそのまま書き写し、入出力の部分だけをその言語のやり方で書き直せばよい。
 
-## Directory layout
+## ディレクトリ構成
 
 ```
 sanmokunarabe/
-├── README.md        this file (English)
-├── README.ja.md     Japanese version
+├── README.md        このファイル (日本語)
+├── README.en.md     英語版
 ├── docs/
-│   └── test-spec.md rules and test spec, shared by all languages
-└── cpp/             C++ version (build instructions in cpp/README.md)
+│   └── test-spec.md ルールとテストの仕様 (全言語で共有)
+└── cpp/             C++ 版 (ビルド方法は cpp/README.md)
 ```
