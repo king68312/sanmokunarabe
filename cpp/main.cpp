@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "board.h"
+#include "controller.h"
+#include "model.h"
 
 int main() {
   std::cout << "三目並べゲームを開始します。" << std::endl;
   do {
-    playGame();
+    if (!playGame()) break;
   } while (retry());
-  return 0;
 }
